@@ -11,7 +11,7 @@ def pollNewMessage():
     dbConnection = DatabaseConnection.getDBCursor()
     cursor = dbConnection.cursor()
 
-    query = "select * from messages order by date desc"
+    query = "select * from messages order by id desc"
     cursor.execute(query,)
     result = cursor.fetchone()
     dbConnection.close()
