@@ -2,6 +2,8 @@ from flask import Flask, jsonify
 from flask import request
 from db import DatabaseConnection
 
+c = DatabaseConnection.getDBCursor()
+
 app = Flask(__name__)
 
 @app.route('/')
