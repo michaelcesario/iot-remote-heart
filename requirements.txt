@@ -3,5 +3,5 @@ passlib
 psycopg2
 datetime
 urlparse3
-uwsgi
 werkzeug
+gunicorn

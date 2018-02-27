@@ -30,3 +30,7 @@ def postMessage():
     if request.method == 'POST':
         message = request.form['message']
         duration = request.form['duration']
+
+
+if __name__ == "__main__":
+    app.run()
