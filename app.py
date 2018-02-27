@@ -2,7 +2,7 @@ from flask import Flask, jsonify
 from flask import request
 from db import DatabaseConnection
 
-c = DatabaseConnection.getDBCursor()
+#c = DatabaseConnection.getDBCursor()
 
 app = Flask(__name__)
 
@@ -23,6 +23,11 @@ def pollNewMessage():
         return jsonify({"message": message}), 200
     else:
         return jsonify({"error": "no message"}), 400
+
+
+@app.route('/test')
+def test():
+    return jsonify({"message": "test"}), 200
 
 
 @app.route('/post-message', methods=['GET', 'POST'])
