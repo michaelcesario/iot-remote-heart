@@ -44,6 +44,7 @@ def addNewAlert():
         query = "insert into alerts values (%s, %s, 1)"
         cursor.execute(query, (message, duration))
 
+        dbConnection.commit()
         dbConnection.close()
         return jsonify({}), 201
 
@@ -58,10 +59,11 @@ def invalidateAlert():
 
         print("invalidating alert with id")
         print(_id)
-        
+
         query = "update alerts set valid = 0 where id = %s"
         cursor.execute(query, (_id,))
 
+        dbConnection.commit()
         dbConnection.close()
         return jsonify({}), 201
 
