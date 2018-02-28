@@ -11,33 +11,54 @@ def pollNewMessage():
     dbConnection = DatabaseConnection.getDBCursor()
     cursor = dbConnection.cursor()
 
-    query = "select * from messages order by id desc"
+    query = "select * from alerts order by id desc"
     cursor.execute(query,)
     result = cursor.fetchone()
+
     dbConnection.close()
 
     if result:
         message = result[0]
         duration = result[1]
-        date = result[2]
-        return jsonify({
-            "message": message,
-            "duration": duration
-        }), 200
+        valid = result[2]
+        _id = result[3]
+
+        if valid == 1:
+            return jsonify({"message": message, "duration": duration, "id": _id}), 200
+        else:
+            return jsonify({}), 202
+
     else:
-        return jsonify({"error": "no message"}), 400
+        return jsonify({}), 202
 
 
-@app.route('/test')
-def test():
-    return jsonify({"message": "test"}), 200
-
-
-@app.route('/post-message', methods=['GET', 'POST'])
-def postMessage():
+@app.route('/new-alert', methods=['POST'])
+def addNewAlert():
     if request.method == 'POST':
+        dbConnection = DatabaseConnection.getDBCursor()
+        cursor = dbConnection.cursor()
+
         message = request.form['message']
         duration = request.form['duration']
+
+        query = "insert into alerts values (%s, %s, 1)"
+        cursor.execute(query, (message, duration))
+
+        dbConnection.close()
+
+
+@app.route('/invalidate-alert', methods=['POST'])
+def invalidateAlert():
+    if request.method == 'POST':
+        dbConnection = DatabaseConnection.getDBCursor()
+        cursor = dbConnection.cursor()
+
+        _id = request.form['id']
+
+        query = "update alerts set valid = 0 where id = %s"
+        cursor.execute(query, (_id,))
+
+        dbConnection.close()
 
 
 if __name__ == "__main__":
