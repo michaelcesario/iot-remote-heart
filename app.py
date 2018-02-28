@@ -56,6 +56,9 @@ def invalidateAlert():
 
         _id = request.form['id']
 
+        print("invalidating alert with id")
+        print(_id)
+        
         query = "update alerts set valid = 0 where id = %s"
         cursor.execute(query, (_id,))
 
