@@ -20,7 +20,10 @@ def pollNewMessage():
         message = result[0]
         duration = result[1]
         date = result[2]
-        return jsonify({"message": message}), 200
+        return jsonify({
+            "message": message,
+            "duration": duration
+        }), 200
     else:
         return jsonify({"error": "no message"}), 400
 
