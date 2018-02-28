@@ -45,6 +45,7 @@ def addNewAlert():
         cursor.execute(query, (message, duration))
 
         dbConnection.close()
+        return jsonify({}), 201
 
 
 @app.route('/invalidate-alert', methods=['POST'])
@@ -59,7 +60,7 @@ def invalidateAlert():
         cursor.execute(query, (_id,))
 
         dbConnection.close()
-
+        return jsonify({}), 201
 
 if __name__ == "__main__":
     app.run()
