@@ -6,6 +6,13 @@ from db import DatabaseConnection
 
 app = Flask(__name__)
 
+@app.route('/distance', methods = ['POST'])
+def postJsonHandler():
+    content = request.get_json()
+    print (content)
+    return_message = 'posted ' + content['distance']
+    return return_message
+
 @app.route('/')
 def pollNewMessage():
     dbConnection = DatabaseConnection.getDBCursor()
